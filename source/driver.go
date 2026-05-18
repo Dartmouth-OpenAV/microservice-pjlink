@@ -224,9 +224,10 @@ func setMuteDo(socketKey string, state string, which string) (string, error) {
 	PJLinkEstablishConnectionIfNeeded(socketKey)
 
 	if which == "video" {
-		if state == `"on"` {
+		// Allows backwards compatibility for "on" or "off"
+		if state == `"on"` || state == `"true"` {
 			state = "11"
-		} else if state == `"off"` {
+		} else if state == `"off"` || state == `"false"` {
 			state = "10"
 		} else {
 			errMsg := fmt.Sprintf(function + " - svfdsq43 unrecognized state value: " + state)
@@ -234,9 +235,9 @@ func setMuteDo(socketKey string, state string, which string) (string, error) {
 			return state, errors.New(errMsg)
 		}
 	} else if which == "audio" {
-		if state == `"on"` {
+		if state == `"on"` || state == `"true"` {
 			state = "21"
-		} else if state == `"off"` {
+		} else if state == `"off"` || state == `"false"` {
 			state = "20"
 		} else {
 			errMsg := fmt.Sprintf(function + " - 345wg unrecognized state value: " + state)
@@ -244,10 +245,14 @@ func setMuteDo(socketKey string, state string, which string) (string, error) {
 			return state, errors.New(errMsg)
 		}
 	} else if which == "both" {
-		if state == `"on"` {
+		if state == `"on"` || state == `"true"` {
 			state = "31"
-		} else if state == `"off"` {
+		} else if state == `"off"` || state == `"false"` {
 			state = "30"
+		} else {
+			errMsg := fmt.Sprintf(function + " - 89dsi unrecognized state value: " + state)
+			framework.AddToErrors(socketKey, errMsg)
+			return state, errors.New(errMsg)
 		}
 	}
 

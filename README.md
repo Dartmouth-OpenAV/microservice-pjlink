@@ -4,6 +4,12 @@ OpenAV microservice for PJLink.  Uses the microservice framework and PJLink to c
 
 This microservice operates and controls projectors that adhere to the PJLink communication standard.
 
+## Endpoint Notes
+
+Some devices throw errors when trying to use `audiomute` or `videomute` independently. For these devices, use the `audioandvideomute` endpoint instead.
+
+##
+
 [JBMIA PJLink](https://pjlink.jbmia.or.jp/english/)
 
 [SONY VPL-FHZ85](https://pro.sony/ue_US/products/laser-projectors/vpl-fhz85)

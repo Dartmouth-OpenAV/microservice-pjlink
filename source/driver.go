@@ -696,14 +696,15 @@ func PJLinkEstablishConnectionIfNeeded(socketKey string) {
 			}
 
 			connectionHash := ""
-			if responseSplit[1] != "0" && responseSplit[1] != "1" {
-				framework.AddToErrors(socketKey, socketKey+" - 324q2 I'm not sure wheter to treat this connection as authenticated or not")
+			switch responseSplit[1] {
+				case "0":
+					//No auth required
+					return
+				case "1":
+					connectionHash = responseSplit[2]
+				default:
+					framework.AddToErrors(socketKey, socketKey+" - 324q2 I'm not sure whether to treat this connection as authenticated or not")
 			}
-
-			if responseSplit[1] == "1" {
-				connectionHash = responseSplit[2]
-			}
-
 			passwordIfAny := ""
 			if strings.Count(socketKey, "@") == 1 {
 				credentials := strings.Split(socketKey, "@")[0]
